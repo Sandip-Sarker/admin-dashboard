@@ -23,6 +23,8 @@
     @include('backend.partial.footer')
 
     @include('backend.partial.script')
+
+    @stack('scripts')
 </body>
 
 </html>

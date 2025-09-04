@@ -1,33 +1,3 @@
-{{--<x-app-layout>--}}
-{{--    <x-slot name="header">--}}
-{{--        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">--}}
-{{--            {{ __('Profile') }}--}}
-{{--        </h2>--}}
-{{--    </x-slot>--}}
-
-{{--    <div class="py-12">--}}
-{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">--}}
-{{--            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">--}}
-{{--                <div class="max-w-xl">--}}
-{{--                    @include('profile.partials.update-profile-information-form')--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">--}}
-{{--                <div class="max-w-xl">--}}
-{{--                    @include('profile.partials.update-password-form')--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">--}}
-{{--                <div class="max-w-xl">--}}
-{{--                    @include('profile.partials.delete-user-form')--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</x-app-layout>--}}
-
 @extends('backend.master')
 
 @section('main_content')
@@ -36,31 +6,19 @@
         <div class="page-content">
             <div class="container-fluid">
 
-                <div class="position-relative mx-n4 mt-n4">
-                    <div class="profile-wid-bg profile-setting-img">
-                        <img src="assets/images/profile-bg.jpg" class="profile-wid-img" alt="">
-                        <div class="overlay-content">
-                            <div class="text-end p-3">
-                                <div class="p-0 ms-auto rounded-circle profile-photo-edit">
-                                    <input id="profile-foreground-img-file-input" type="file" class="profile-foreground-img-file-input">
-                                    <label for="profile-foreground-img-file-input" class="profile-photo-edit btn btn-light">
-                                        <i class="ri-image-edit-line align-bottom me-1"></i> Change Cover
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
-                    <div class="col-xxl-3">
-                        <div class="card mt-n5">
+                    <div class="col-xxl-4 col-md-4 ">
+                        <div class="card mt-3">
                             <div class="card-body p-4">
                                 <div class="text-center">
+                                    <form action="{{route('profile.update')}}" method="post">
+                                        @csrf
                                     <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                                        <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                                        <img id="profile_preview"
+                                            src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                            <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                            <input name="avatar" id="profile-img-file-input" type="file" class="profile-img-file-input"
+                                                   onchange="previewImage(event, 'profile_preview')">
                                             <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                                     <span class="avatar-title rounded-circle bg-light text-body">
                                                         <i class="ri-camera-fill"></i>
@@ -68,15 +26,15 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <h5 class="fs-16 mb-1">Anna Adame</h5>
-                                    <p class="text-muted mb-0">Lead Designer / Developer</p>
+                                    </form>
+                                    <h5 class="fs-16 mb-1">{{ Auth::user()->name  }}</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--end col-->
-                    <div class="col-xxl-9">
-                        <div class="card mt-xxl-n5">
+                    <div class="col-md-8">
+                        <div class="card mt-3">
                             <div class="card-header">
                                 <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
                                     <li class="nav-item">
@@ -98,7 +56,7 @@
                                             @csrf
                                             <div class="row">
                                                 {{-- Name --}}
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Name</label>
                                                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="{{ Auth::user()->name }}">
@@ -106,7 +64,7 @@
                                                 </div>
 
                                                 <!-- Email -->
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="mb-3">
                                                         <label for="email" class="form-label">Email</label>
                                                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" value="{{ Auth::user()->email }}">
@@ -129,7 +87,7 @@
                                             @csrf
                                             <div class="row g-2">
                                                 <!-- Old Password -->
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-12">
                                                     <div>
                                                         <label for="current_password" class="form-label">Old Password*</label>
                                                         <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Enter current password">
@@ -137,7 +95,7 @@
                                                 </div>
 
                                                 <!--New Password-->
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-12">
                                                     <div>
                                                         <label for="password" class="form-label">New Password*</label>
                                                         <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password">
@@ -145,7 +103,7 @@
                                                 </div>
 
                                                 <!-- Password Confirmation -->
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-12">
                                                     <div>
                                                         <label for="password_confirmation" class="form-label">Confirm Password*</label>
                                                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm password">
@@ -193,3 +151,15 @@
     <!-- end main content-->
 
 @endsection
+
+@push('scripts')
+    <script>
+        function previewImage(event, previewId) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById(previewId).src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+@endpush
