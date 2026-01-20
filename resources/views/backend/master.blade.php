@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+      data-sidebar-image="none" data-preloader="disable">
 <head>
 
     @include('backend.partial.meta')
@@ -20,11 +21,12 @@
 
 </div>
 
-    @include('backend.partial.footer')
+@include('backend.partial.setting')
+@include('backend.partial.footer')
 
-    @include('backend.partial.script')
+@include('backend.partial.script')
 
-    @stack('scripts')
+@stack('scripts')
 </body>
 
 </html>

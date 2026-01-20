@@ -2,7 +2,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index.html" class="logo logo-dark">
+        <a href="{{ route('dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{asset('/')}}assets/images/logo-sm.png" alt="" height="22">
                     </span>
@@ -11,7 +11,7 @@
                     </span>
         </a>
         <!-- Light Logo-->
-        <a href="index.html" class="logo logo-light">
+        <a href="{{ route('dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{asset('/')}}assets/images/logo-sm.png" alt="" height="22">
                     </span>
@@ -32,8 +32,8 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('dashboard') }}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                        Dashboards
+                    <a class="nav-link menu-link" href="{{ route('dashboard') }}"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                       <i class="ri-dashboard-2-line"></i> <span data-key="t-apps"></span> Dashboards
                     </a>
                 </li> <!-- end Dashboard Menu -->
                 <li class="nav-item">

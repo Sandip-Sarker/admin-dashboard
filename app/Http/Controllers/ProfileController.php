@@ -51,7 +51,7 @@ class ProfileController extends Controller
         ]);
 
         try {
-            $user = User::where('email', $request->email)->first();
+            $user = auth()->user();
 
             if (!$user) {
                 return back()->with( 'error', 'User with this email does not exist.');
@@ -62,15 +62,18 @@ class ProfileController extends Controller
             if (!empty($request->password )) {
                 $user->password = bcrypt($request->password );
             }
-            if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            if ($request->hasFile('avatar')) {
 
-                if (!empty($user->avatar) && File::exists(public_path($user->avatar))) {
+                // delete old image
+                if ($user->avatar && File::exists(public_path($user->avatar))) {
                     File::delete(public_path($user->avatar));
                 }
-                $thumbnail      = $request->file('avatar');
-                $thumbnailName  = 'user-profile_' . time() . '.' . $thumbnail->getClientOriginalExtension();
-                $thumbnail->move(public_path('/uploads/user-profile/'), $thumbnailName);
-                $user->image    = '/uploads/user-profile/' . $thumbnailName;
+
+                $file = $request->file('avatar');
+                $fileName = 'user-profile_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/user-profile'), $fileName);
+
+                $user->avatar = 'uploads/user-profile/' . $fileName;
             }
             $user->save();
 

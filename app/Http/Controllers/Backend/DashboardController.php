@@ -11,6 +11,6 @@ class DashboardController extends Controller
     public function index(): View
     {
         $data['title'] = 'Dashboard | Home';
-        return view('backend.component.dashboard')->with($data);
+        return view('backend.layouts.dashboard')->with($data);
     }
 }
